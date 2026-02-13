@@ -439,17 +439,28 @@ describe('StarRating Component', () => {
 5. **Actualizar Components** → **Integration** → **Tests Frontend**
 6. **QA Testing** → **Performance Testing** → **Deploy**
 
-## Estimación Final
+## Estado de Implementacion por Fases
 
-| Fase | Componente | Horas |
-|------|------------|-------|
-| 1 | Database & Migrations | 2h |
-| 2 | Backend Models & Services | 4h |
-| 3 | Backend API Endpoints | 2h |
-| 4 | Frontend Types & Services | 2h |
-| 5 | Frontend Components | 4h |
-| 6 | Testing & QA | 2h |
-| **TOTAL** | **Sistema de Ratings Completo** | **16h** |
+| Fase | Componente | Horas | Estado |
+|------|------------|-------|--------|
+| 1 | Database & Migrations | 2h | - [x] Completada |
+| 2 | Backend Models & Services | 4h | - [x] Completada |
+| 3 | Backend API Endpoints | 2h | - [x] Completada |
+| 4 | Frontend Types & Services | 2h | - [x] Completada |
+| 5 | Frontend Components (readonly) | 4h | - [x] Completada (readonly) |
+| 5b | Frontend Components (interactivo) | -- | - [ ] Pendiente (ver `spec/04_frontend_interactive_ratings_implementation_plan.md`) |
+| 6 | Testing & QA (backend) | 1h | - [x] Completada |
+| 6b | Testing & QA (frontend) | 1h | - [x] Completada (StarRating readonly) |
+| **TOTAL** | **Sistema de Ratings Completo** | **16h** | |
+
+### Fases adicionales identificadas post-implementacion (ver `spec/05_backend_ratings_phases.md`)
+
+- [x] **Fase A**: Partial Unique Index para `course_ratings` (bug critico corregido)
+- [ ] **Fase B**: Eliminar modelo huerfano `Class` (prioridad baja)
+- [ ] **Fase C**: Corregir seed de datos con ratings de ejemplo (prioridad media)
+- [ ] **Fase D**: Optimizar N+1 en `get_all_courses()` (prioridad media)
+- [ ] **Fase E**: Crear `conftest.py` e infraestructura de tests (prioridad media)
+- [ ] **Fase F**: Tests faltantes - model properties, edge cases (prioridad media)
 
 ---
 

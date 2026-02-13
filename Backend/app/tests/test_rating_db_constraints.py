@@ -65,7 +65,6 @@ class TestRatingConstraints:
         with pytest.raises(IntegrityError, match="ck_course_ratings_rating_range"):
             db_session.commit()
 
-    @pytest.mark.skip(reason="UNIQUE constraint with NULL values requires partial index in PostgreSQL. Business logic prevents duplicates at service layer.")
     def test_unique_constraint_prevents_duplicate_active_ratings(
         self,
         db_session,
@@ -96,7 +95,7 @@ class TestRatingConstraints:
         db_session.add(rating2)
 
         # Assert
-        with pytest.raises(IntegrityError, match="uq_course_ratings_user_course_deleted"):
+        with pytest.raises(IntegrityError, match="uix_course_ratings_active_user_course"):
             db_session.commit()
 
     def test_unique_constraint_allows_soft_deleted_duplicates(

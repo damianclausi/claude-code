@@ -1,46 +1,54 @@
-.PHONY: start stop restart build logs clean migrate create-migration seed seed-fresh help
+.PHONY: start stop restart build logs clean migrate create-migration seed seed-fresh test help
+
+# Usar 'docker compose' (v2) - compatible con Docker Desktop en WSL 2
+# Si falla, asegúrate de tener Docker Desktop con integración WSL activada
+COMPOSE = docker compose
 
 # Comando principal para iniciar el entorno de desarrollo
 start:
-	docker-compose up -d
+	$(COMPOSE) up -d
 
 # Detener los contenedores
 stop:
-	docker-compose down
+	$(COMPOSE) down
 
 # Reiniciar los contenedores
 restart:
-	docker-compose restart
+	$(COMPOSE) restart
 
 # Construir las imágenes
 build:
-	docker-compose build
+	$(COMPOSE) build
 
 # Ver los logs de los contenedores
 logs:
-	docker-compose logs -f
+	$(COMPOSE) logs -f
 
 # Limpiar contenedores, volúmenes e imágenes
 clean:
-	docker-compose down -v --rmi all --remove-orphans
+	$(COMPOSE) down -v --rmi all --remove-orphans
 
 # Ejecutar migraciones de la base de datos
 migrate:
-	docker-compose exec api bash -c "cd /app && uv run alembic -c app/alembic.ini upgrade head"
+	$(COMPOSE) exec api bash -c "cd /app && uv run alembic -c app/alembic.ini upgrade head"
 
 # Crear una nueva migración
 create-migration:
 	@read -p "Ingrese el mensaje para la migración: " message; \
-	docker-compose exec api bash -c "cd /app && uv run alembic -c app/alembic.ini revision --autogenerate -m \"$$message\""
+	$(COMPOSE) exec api bash -c "cd /app && uv run alembic -c app/alembic.ini revision --autogenerate -m \"$$message\""
 
 # Ejecutar seed de datos
 seed:
-	docker-compose exec api bash -c "cd /app && uv run python -m app.db.seed"
+	$(COMPOSE) exec api bash -c "cd /app && uv run python -m app.db.seed"
 
 # Limpiar y recrear datos de seed
 seed-fresh:
-	docker-compose exec api bash -c "cd /app && uv run python -m app.db.seed clear"
-	docker-compose exec api bash -c "cd /app && uv run python -m app.db.seed"
+	$(COMPOSE) exec api bash -c "cd /app && uv run python -m app.db.seed clear"
+	$(COMPOSE) exec api bash -c "cd /app && uv run python -m app.db.seed"
+
+# Ejecutar pruebas dentro del contenedor
+test:
+	$(COMPOSE) exec api bash -c "cd /app && uv run pytest app/tests/ -v"
 
 # Mostrar ayuda
 help:
@@ -55,6 +63,7 @@ help:
 	@echo "  make create-migration  - Crear una nueva migración"
 	@echo "  make seed              - Ejecutar seed de datos"
 	@echo "  make seed-fresh        - Limpiar y recrear datos de seed"
+	@echo "  make test              - Ejecutar pruebas dentro del contenedor"
 	@echo "  make help              - Mostrar esta ayuda"
 
 # Comando por defecto
