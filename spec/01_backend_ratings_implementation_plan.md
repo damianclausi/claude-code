@@ -2477,7 +2477,7 @@ pytest app/tests/ -v --lf
 - [x] Crear `test_rating_db_constraints.py` (DB tests)
 - [x] Ejecutar tests: `pytest app/tests/ -v`
 - [x] Verificar coverage: `pytest --cov=app`
-- [x] Todos los tests pasan ✓ (39 passed, 1 skipped)
+- [x] Todos los tests pasan ✓ (40 passed, 0 skipped)
 
 ---
 
