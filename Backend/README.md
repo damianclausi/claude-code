@@ -3,6 +3,7 @@
 ## Descripción del Proyecto
 
 Platziflix es una plataforma online de cursos simple y directa. Cada curso contiene clases con descripciones básicas. Es una implementación minimalista enfocada en la funcionalidad core de distribución de contenido educativo.
+#para pull request
 
 ## Stack Tecnológico
 
